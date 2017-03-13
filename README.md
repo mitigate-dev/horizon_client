@@ -17,7 +17,7 @@ post_response = client.post('example', 'post body')
 
 ### Necessary environment variables
 
-* **HORIZON_REST_URL** e.x. http://user:pass@ip:port
+* **HORIZON_REST_URL** e.x. http://user:pass@ip:port/rest. Note the "/rest" part
 
 ## Development
 
