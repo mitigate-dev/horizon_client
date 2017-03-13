@@ -38,7 +38,7 @@ RSpec.describe HorizonClient do
     end
 
     it 'raises error with a message' do
-      expect { client.get(error_path) }.to raise_error HorizonClient::Error
+      expect { client.get(error_path) }.to raise_error HorizonClient::ClientError
     end
   end
 end

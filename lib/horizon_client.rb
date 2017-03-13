@@ -14,7 +14,7 @@ module HorizonClient
     uri.to_s
   end
 
-  class Error < StandardError
+  class ClientError < Faraday::ClientError
     def initialize(e)
       info = e.response ? e.response[:body].fetch('error', {}).fetch('message', '') : ''
       super [e.message, info].join(': ')
@@ -38,7 +38,7 @@ module HorizonClient
       response.body
 
     rescue Faraday::ClientError => e
-      raise Error.new(e)
+      raise ClientError.new(e)
     end
 
     def post(path = '', body)
@@ -50,7 +50,7 @@ module HorizonClient
 
       response.body
     rescue Faraday::ClientError => e
-      raise Error.new(e)
+      raise ClientError.new(e)
     end
   end
 end
