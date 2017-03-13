@@ -41,4 +41,21 @@ RSpec.describe HorizonClient do
       expect { client.get(error_path) }.to raise_error HorizonClient::ClientError
     end
   end
+
+  context 'url overrides' do
+    let!(:client) { HorizonClient.new(url: 'http://hor.test') }
+
+    before do
+      xml = <<-XML
+        <resource>
+          <description>different success</description>
+        </resource>
+      XML
+      stub_request(:get, horizon_url(get_path, url: 'http://hor.test')).to_return(body: xml, status: 200, headers: { 'Content-Type': 'xml' })
+    end
+
+    it 'uses param url over environment parameter' do
+      expect(client.get(get_path)).to match({'resource' => {'description' => 'different success'}})
+    end
+  end
 end
