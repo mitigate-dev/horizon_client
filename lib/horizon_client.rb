@@ -4,17 +4,11 @@ require "multi_xml"
 require "faraday_middleware"
 
 module HorizonClient
-  def self.new
-    Connection.new(rest_base)
+  def self.new(*args)
+    Connection.new(*args)
   end
 
-  def self.rest_base
-    uri = URI(ENV['HORIZON_REST_URL'])
-    uri.path = '/rest'
-    uri.to_s
-  end
-
-  class Error < StandardError
+  class ClientError < Faraday::ClientError
     def initialize(e)
       info = e.response ? e.response[:body].fetch('error', {}).fetch('message', '') : ''
       super [e.message, info].join(': ')
@@ -22,15 +16,19 @@ module HorizonClient
   end
 
   class Connection
-    def initialize(rest_base)
-      @connection = Faraday.new rest_base do |conn|
+    def initialize(url = nil)
+      url ||=  ENV['HORIZON_REST_URL']
+
+      @connection = Faraday.new url do |conn|
         conn.response :raise_error
         conn.response :xml,  :content_type => /\bxml$/
 
-        conn.basic_auth ENV['HORIZON_USERNAME'], ENV['HORIZON_PASSWORD']
-
         conn.adapter Faraday.default_adapter
       end
+    end
+
+    def url_prefix
+      @connection.url_prefix
     end
 
     def get(path = '', params = {})
@@ -38,7 +36,7 @@ module HorizonClient
       response.body
 
     rescue Faraday::ClientError => e
-      raise Error.new(e)
+      raise ClientError.new(e)
     end
 
     def post(path = '', body)
@@ -50,7 +48,7 @@ module HorizonClient
 
       response.body
     rescue Faraday::ClientError => e
-      raise Error.new(e)
+      raise ClientError.new(e)
     end
   end
 end

@@ -4,12 +4,10 @@ require "horizon_client"
 require 'webmock/rspec'
 
 ENV['HORIZON_REST_URL'] = 'http://horizon.test'
-ENV['HORIZON_USERNAME'] = 'username'
-ENV['HORIZON_PASSWORD'] = 'password'
 
 module ClientHelperMethods
-  def horizon_url(path)
-    HorizonClient.rest_base + '/' + path
+  def horizon_url(client, path)
+    "#{client.url_prefix}#{path}"
   end
 end
 
