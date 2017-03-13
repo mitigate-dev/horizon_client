@@ -43,7 +43,7 @@ RSpec.describe HorizonClient do
   end
 
   context 'url overrides' do
-    let!(:client) { HorizonClient.new(url: 'http://hor.test') }
+    let!(:client) { HorizonClient.new('http://hor.test') }
 
     before do
       xml = <<-XML

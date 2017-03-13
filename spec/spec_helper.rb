@@ -7,7 +7,7 @@ ENV['HORIZON_REST_URL'] = 'http://horizon.test'
 
 module ClientHelperMethods
   def horizon_url(client, path)
-    client.url_prefix + "/#{path}"
+    "#{client.url_prefix}#{path}"
   end
 end
 
