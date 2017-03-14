@@ -10,7 +10,10 @@ Gem::Specification.new do |spec|
   spec.email         = ["martins.lapsa@makit.lv"]
 
   spec.summary       = %q{Client for Horizon accounting REST xml API.}
-  spec.homepage      = ""
+  spec.description   = "Client for Horizon by VISMA accounting REST xml API."
+  spec.homepage      = "http://rubygems.org/gems/horizon_client"
+
+  spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
@@ -24,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "webmock", "~> 2.0"
 
-  spec.add_dependency 'faraday'
-  spec.add_dependency 'multi_xml'
-  spec.add_dependency 'faraday_middleware'
+  spec.add_dependency 'faraday', '~> 0.11'
+  spec.add_dependency 'multi_xml', '~> 0.6'
+  spec.add_dependency 'faraday_middleware', '~> 0.11'
 end
