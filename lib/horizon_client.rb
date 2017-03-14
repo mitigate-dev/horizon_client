@@ -10,8 +10,17 @@ module HorizonClient
 
   class ClientError < Faraday::ClientError
     def initialize(e)
-      info = e.response ? e.response[:body].fetch('error', {}).fetch('message', '') : ''
-      super [e.message, info].join(': ')
+      message = e.message
+      if e.response.is_a?(Hash)
+        body = e.response[:body]
+        if body.is_a?(Hash)
+          error = body['error']
+          if error.is_a?(Hash)
+            message += ": #{error['message']}"
+          end
+        end
+      end
+      super message
     end
   end
 
