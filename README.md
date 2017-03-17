@@ -21,9 +21,6 @@ client = HorizonClient.new
 #     </row>
 #   </collection>
 # </resource>
-#
-#
-#
 
 # returns and expects HorizonClient::Resource object
 resource = client.get('path')
