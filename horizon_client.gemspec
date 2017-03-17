@@ -28,6 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "webmock", "~> 2.0"
 
   spec.add_dependency 'faraday', '~> 0.11'
-  spec.add_dependency 'multi_xml', '~> 0.6'
-  spec.add_dependency 'faraday_middleware', '~> 0.11'
+  spec.add_dependency 'ox', '~> 2.4'
 end
