@@ -7,12 +7,53 @@ Client to use with Horizon REST xml API.
 ```ruby
 client = HorizonClient.new
 
-get_response = client.get('example')
+# incoming xml:
+# <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+# <resource>
+#   <entity>
+#     <name>Jack</name>
+#     <foo><bar>Jill</bar></foo>
+#   </entity>
+#   <collection>
+#     <row>
+#     </row>
+#     <row>
+#     </row>
+#   </collection>
+# </resource>
 
-post_response = client.post('example', 'post body')
+# returns and expects HorizonClient::Resource object
+resource = client.get('path')
+return_resource = client.post('path', resource)
+
+# get entity:
+entity = resource.entity
+
+# get and set object values
+entity['name'] # => 'Jack'
+entity['name'] = 'Jane'
+entity['foo/bar'] # => 'Jill'
+entity['foo/baz'] = 'Joe' # => <foo><bar>Jill</bar><baz>Joe</baz></foo>
+
+# get or set collection with specified name inside entity
+col = entity.get_collection('col')
+row = col.build # => #<HorizonClient::Entity>
+# result:
+# <entity>
+#   ...
+#   <col>
+#     <row></row>
+#   </col>
+# </entity>
+
+# get first level collection.
+collection = resource.collection
+entity_array = collection.rows # => [ #<HorizonClient::Entity> ]
+entity_array.each do |entity|
+  entity['foo'] = 'test'
+end
+
 ```
-
-`get_response` will be parsed from xml to hash.
 
 
 ### Necessary environment variables
