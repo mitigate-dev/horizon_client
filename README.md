@@ -2,6 +2,26 @@
 
 Client to use with Horizon REST xml API.
 
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'horizon_client'
+```
+
+And then execute:
+
+```bash
+$ bundle
+```
+
+Or install it yourself as:
+
+```bash
+$ gem install horizon_client
+```
+
 ## Usage
 
 ```ruby
