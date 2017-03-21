@@ -15,6 +15,8 @@ module HorizonClient
   end
 
   class Connection
+    attr_accessor :logger
+
     def initialize(url = nil)
       url ||=  ENV['HORIZON_REST_URL']
 
@@ -32,18 +34,31 @@ module HorizonClient
     end
 
     def get(path = '', params = {})
-      response = @connection.get path, params
-      response.body
+      log "GET #{path}", params do
+        response = @connection.get path, params
+        response.body
+      end
     end
 
     def post(path = '', body)
-      response = @connection.post do |req|
-        req.url path
-        req.headers['Content-Type'] = 'application/xml;charset=UTF-8'
-        req.body = body
-      end
+      log "GET #{path}", {body: body} do
+        response = @connection.post do |req|
+          req.url path
+          req.headers['Content-Type'] = 'application/xml;charset=UTF-8'
+          req.body = body
+        end
 
-      response.body
+        response.body
+      end
+    end
+
+    def log(message, params = {})
+      t1 = Time.now
+      yield
+    ensure
+      t2 = Time.now
+      duration = (t2 - t1) / 1000
+      logger.info "Horizon (#{duration}ms) #{message} #{params.inspect}" if logger
     end
   end
 end
