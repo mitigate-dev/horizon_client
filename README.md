@@ -26,6 +26,7 @@ $ gem install horizon_client
 
 ```ruby
 client = HorizonClient.new
+client.logger = Logger.new(STDOUT)
 
 # incoming xml:
 # <?xml version="1.0" encoding="UTF-8" standalone="no"?>
