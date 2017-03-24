@@ -11,6 +11,11 @@ module HorizonClient
       Entity.new(node)
     end
 
+    def result
+      node = @document.result
+      Entity.new(node)
+    end
+
     def collection
       node = @document.resource.collection
       @collection ||= Collection.new(node)
