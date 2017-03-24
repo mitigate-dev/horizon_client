@@ -50,6 +50,9 @@ return_resource = client.post('path', resource)
 # get entity:
 entity = resource.entity
 
+# get result entity after successful upload
+result = return_resource.result
+
 # get and set object values
 entity['name'] # => 'Jack'
 entity['name'] = 'Jane'

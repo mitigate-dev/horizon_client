@@ -31,6 +31,28 @@ RSpec.describe HorizonClient do
     end
   end
 
+  context 'result' do
+    let(:xml) do
+      <<-XML
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <result>
+          <link>
+            <href>success/path</href>
+          </link>
+        </result>
+      XML
+    end
+
+    before do
+      stub_request(:get, horizon_url(client, path)).to_return(body: xml, status: 200, headers: { 'Content-Type': 'xml' })
+    end
+
+    it 'parses result xml response' do
+      entity = client.get(path).result
+      expect(entity['link']).to eq 'success/path'
+    end
+  end
+
   context 'collection' do
     let(:xml) do
       <<-XML
