@@ -117,6 +117,7 @@ RSpec.describe HorizonClient do
         <resource>
           <entity>
             <description>enitity 1</description>
+            <empty_elem/>
             <PK>
               <href>entity/path</href>
             </PK>
@@ -131,6 +132,7 @@ RSpec.describe HorizonClient do
         <resource>
           <entity>
             <description>changed description</description>
+            <empty_elem>not so empty</empty_elem>
             <PK>
               <href>entity/path</href>
             </PK>
@@ -155,6 +157,7 @@ RSpec.describe HorizonClient do
       resource = HorizonClient::Resource.new(xml)
       entity = resource.entity
       entity['description'] = 'changed description'
+      entity['empty_elem'] = 'not so empty'
 
       collection = entity.get_collection('col')
 
