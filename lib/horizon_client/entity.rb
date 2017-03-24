@@ -13,6 +13,10 @@ module HorizonClient
 
     def []=(name, value)
       elem = find_or_build_attribute(name.split('/'), node)
+
+      # needed in case element is in '</elem>' form
+      check = elem.text
+
       elem.replace_text(value)
     end
 
