@@ -33,9 +33,7 @@ module HorizonClient
         child = Ox::Element.new(name)
         parent << child
       end
-      find_or_build_attribute(path, child) unless path.empty?
-
-      child
+      path.empty? ? child : find_or_build_attribute(path, child)
     end
 
     def get_value(node)

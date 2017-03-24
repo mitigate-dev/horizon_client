@@ -134,7 +134,7 @@ RSpec.describe HorizonClient do
             <description>changed description</description>
             <empty_elem>not so empty</empty_elem>
             <PK>
-              <href>entity/path</href>
+              <href>other/path</href>
             </PK>
             <col>
               <row>
@@ -158,6 +158,7 @@ RSpec.describe HorizonClient do
       entity = resource.entity
       entity['description'] = 'changed description'
       entity['empty_elem'] = 'not so empty'
+      entity['PK/href'] = 'other/path'
 
       collection = entity.get_collection('col')
 
