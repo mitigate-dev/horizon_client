@@ -96,6 +96,38 @@ RSpec.describe HorizonClient do
     end
   end
 
+  context 'group' do
+    let(:xml) do
+      <<-XML
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <resource>
+          <group>
+            <link>
+              <href>link/1</href>
+            </link>
+            <link>
+              <href>link/2</href>
+            </link>
+          </group>
+        </resource>
+      XML
+    end
+
+    before do
+      stub_request(:get, horizon_url(client, path)).to_return(body: xml, status: 200, headers: { 'Content-Type': 'xml' })
+    end
+
+    it 'parses group xml' do
+      group = client.get(path).group
+
+      expect(group.rows.size).to eq 2
+
+      row = group.rows.first
+
+      expect(row['href']).to eq 'link/1'
+    end
+  end
+
   context 'error handling' do
     before do
       xml = <<-XML
