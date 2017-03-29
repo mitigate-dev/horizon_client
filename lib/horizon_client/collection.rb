@@ -6,13 +6,13 @@ module HorizonClient
 
     def initialize(node)
       @node = node
-      @rows = @node.locate('row').map do |row|
+      @rows = @node.locate(row_element_name).map do |row|
         Entity.new(row)
       end
     end
 
     def build
-      row = Ox::Element.new('row')
+      row = Ox::Element.new(row_element_name)
       node << row
       entity = Entity.new(row)
       @rows.push(entity)
@@ -25,6 +25,12 @@ module HorizonClient
 
     def each(&block)
       @rows.each(&block)
+    end
+
+    private
+
+    def row_element_name
+      'row'
     end
   end
 end

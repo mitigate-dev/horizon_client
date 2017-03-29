@@ -21,6 +21,11 @@ module HorizonClient
       @collection ||= Collection.new(node)
     end
 
+    def group
+      node = @document.resource.group
+      @group ||= Group.new(node)
+    end
+
     def error
       if document.respond_to?('error')
         document.error.message.text
