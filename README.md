@@ -41,6 +41,12 @@ client.logger = Logger.new(STDOUT)
 #     <row>
 #     </row>
 #   </collection>
+#   <group>
+#     <link>
+#     </link>
+#     <link>
+#     </link>
+#   </group>
 # </resource>
 
 # returns and expects HorizonClient::Resource object
@@ -76,6 +82,9 @@ entity_array = collection.rows # => [ #<HorizonClient::Entity> ]
 entity_array.each do |entity|
   entity['foo'] = 'test'
 end
+
+# get group with links, it behaves just like collection
+group = resource.group
 
 ```
 
