@@ -39,11 +39,18 @@ module HorizonClient
 
     def log(message, params = {})
       t1 = Time.now
-      yield
+      response = yield
     ensure
       t2 = Time.now
       duration = (t2 - t1) / 1000
-      logger.info "Horizon (#{duration}ms) #{message} #{params.inspect}" if logger
+      if logger
+        log_item = "Horizon (#{duration}ms) #{message}" \
+                   "\nBody:" \
+                   "\n#{params[:body].respond_to?(:xml) ? params[:body].xml : params[:body].inspect}" \
+                   "\nResponse:" \
+                   "\n#{response.respond_to?(:xml) ? response.xml : response.inspect}"
+        logger.info log_item
+      end
     end
   end
 end

@@ -1,9 +1,11 @@
 module HorizonClient
   class Resource
     attr_reader :document
+    attr_reader :xml
 
     def initialize(xml)
       @document = Ox.parse(xml)
+      @xml = xml
     end
 
     def entity
