@@ -9,6 +9,8 @@ module HorizonClient
         conn.response :raise_error
         conn.use HorizonClient::Response::ParseXml
         conn.use HorizonClient::Request::EncodeXml
+        conn.options.timeout = 20
+        conn.options.open_timeout = 2
 
         conn.adapter Faraday.default_adapter
       end
